@@ -1,10 +1,24 @@
-import set from 'lodash/set';
-import fpSet from 'lodash/fp/set';
+import cloneDeep from 'lodash/fp/cloneDeep';
 
-const obj = {};
+class User {
+  constructor(private name: string) {
+  }
 
-const obj1 = set(obj, 'aaa', 'normal-set');
-console.log('set:', obj, obj1);
+  withNewName(newName: string): User {
+    this.name = newName;
+    return this;
+  }
 
-const obj2 = fpSet('bbb', 'normal-set', obj);
-console.log('fp set:', obj, obj2);
+  hello() {
+    console.log(`Hello, ${this.name}!`)
+  }
+}
+
+const user = new User('lodash');
+const clone = cloneDeep(user);
+
+user.hello();
+user.withNewName('aaa').hello();
+
+clone.hello()
+clone.withNewName('bbb').hello();
